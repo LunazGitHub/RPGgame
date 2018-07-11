@@ -2757,7 +2757,7 @@ Animation:
   m_Animations:
   - {fileID: 7400000, guid: 3b93eed085066a4459874f4c6685f707, type: 2}
   m_WrapMode: 0
-  m_PlayAutomatically: 0
+  m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 0
 --- !u!114 &852401766
@@ -2907,7 +2907,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 852401763}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25ab034f5619345438e85ac730a876f3, type: 3}
   m_Name: 
