@@ -123,5 +123,49 @@ public class RuntimeBootstrap : MonoBehaviour
             Rigidbody prb = player.AddComponent<Rigidbody>();
             prb.constraints = RigidbodyConstraints.FreezeRotation;
         }
+
+        // Create a Warrior NPC under Enviroment/Ground if none exists
+        if (GameObject.Find("WarriorNPC") == null)
+        {
+            // Attempt to parent under Enviroment/Ground if present
+            GameObject parent = GameObject.Find("Enviroment");
+            Transform groundT = null;
+            if (parent != null)
+            {
+                Transform g = parent.transform.Find("Ground");
+                if (g != null) groundT = g;
+            }
+
+            GameObject warriorGO = new GameObject("WarriorNPC");
+            if (groundT != null) warriorGO.transform.SetParent(groundT, false);
+            warriorGO.transform.position = new Vector3(2f, 1f, 2f);
+
+            // Create a simple visual: capsule body and cube head
+            GameObject body = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+            body.name = "Body";
+            body.transform.SetParent(warriorGO.transform, false);
+            body.transform.localPosition = Vector3.zero;
+            body.transform.localScale = new Vector3(0.9f, 1.0f, 0.9f);
+
+            GameObject head = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            head.name = "Head";
+            head.transform.SetParent(warriorGO.transform, false);
+            head.transform.localPosition = new Vector3(0f, 1.1f, 0f);
+            head.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+            // Add collider & rigidbody for physics (so pickup collisions and other physics work around it)
+            Collider wcol = warriorGO.AddComponent<SphereCollider>();
+            (wcol as SphereCollider).radius = 0.6f;
+            Rigidbody wrb = warriorGO.AddComponent<Rigidbody>();
+            wrb.isKinematic = true;
+
+            // Add warrior components
+            Warrior warrior = warriorGO.AddComponent<Warrior>();
+            WarriorAI ai = warriorGO.AddComponent<WarriorAI>();
+            ai.detectionRadius = 8f;
+            ai.speed = 2f;
+            ai.attackRange = 1.2f;
+            ai.attackCooldown = 1.2f;
+        }
     }
 }
